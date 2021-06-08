@@ -1,0 +1,15 @@
+create table clientmaster (clientnum int primary key not null, cname varchar(20), city varchar(26));
+create table salesmaster (salesmanno int primary key,sname VARCHAR(20),city VARCHAR(10));
+create table salesordr (ordernum int primary key not null check (order_no like "0%"),clientnum int REFERENCES clientmaster(clientnum), orderdate date);
+
+insert into salesordr values ('0',101,'2013-06-01'),('01',103,'2013-02-01'),('02',103,'2013-03-21'),('03',102,'2013-03-02'),('04',105,'2013-04-02');
+
+INSERT INTO clientmaster VALUES(101,'senchu','kannur'),(102,'sobin','kannur'),(103,'sajan','mumbai'),(104,'siju','gujarath'),(105,'george','kottayam');
+
+insert into salesmaster VALUES(1,'biju','mumbai'),(2,'amith','mumbai'),(3,'sreelal','kannur'),(4,'anoop','thrissur'),(5,'goutham','pala');
+
+select *  from clientmaster join salesordr on clientmaster.clientnum=salesordr.clientnum where clientmaster.cname='sajan';
+
+select ordernum,cname,orderdate from clientmaster inner join salesordr on clientmaster.clientnum=salesorder.clientnum;
+
+SELECT c.cname,s.sname FROM clientmaster c,salesmaster s WHERE c.city="mumbai" and s.city IN (SELECT city FROM salesmaster where city="mumbai");
